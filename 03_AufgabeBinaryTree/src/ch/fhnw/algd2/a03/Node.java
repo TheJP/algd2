@@ -24,9 +24,9 @@ public class Node {
 	boolean search(int key){
 		if(this.key == key){ return true; }
 		else if(key < this.key){
-			if(left != null){ left.search(key); }
+			if(left != null){ return left.search(key); }
 		} else {
-			if(right != null){ right.search(key); }
+			if(right != null){ return right.search(key); }
 		}
 		return false;
 	}
@@ -69,11 +69,15 @@ public class Node {
 	boolean remove(int key, Node parent, boolean isLeft){
 		if(this.key == key){
 			if(left != null){
-				Node l = this;
-				while(l.left.left != null){ l = l.left; }
-				this.key = l.left.key;
-				//l.left.key = key; If it was not deleted
-				l.left = null;
+				this.key = left.key;
+				if(right != null){
+					//simple but degenerative method
+					Node endLeft = left;
+					while(endLeft.right != null){ endLeft = endLeft.right; }
+					endLeft.right = right;
+				}
+				this.right = left.right;
+				this.left = left.left;
 			} else if(right != null){
 				this.key = right.key;
 				this.left = right.left;

@@ -25,7 +25,7 @@ public class BinaryTree {
 	public boolean remove(int key){
 		Node capsule = new Node(key + 1);
 		capsule.left = root;
-		boolean result = root.remove(key, capsule, true);
+		boolean result = root == null ? false : root.remove(key, capsule, true);
 		root = capsule.left;
 		return result;
 	}
